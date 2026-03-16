@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — VRT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0b1f47;
+      --navy-dark: #071430;
+      --navy-mid: #1a3060;
+      --red: #e8002d;
+      --red-hover: #c4001f;
+      --cream: #f5f4f0;
+      --white: #ffffff;
+      --border: #d8d5cc;
+      --border-light: #ece9e3;
+      --muted: #5a5a5a;
+      --light-bg: #eeecea;
+      --font-serif: 'Source Serif 4', Georgia, serif;
+      --font-sans: 'Source Sans 3', Arial, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-serif);
+      background: var(--cream);
+      color: var(--navy);
+    }
+
+    /* ── HEADER ───────────────────────────────── */
+    .site-header {
+      background: var(--navy);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .vrt-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    /* SVG inline logo */
+    .vrt-logo svg {
+      height: 28px;
+      width: auto;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .header-nav a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+
+    .header-nav a:hover { color: white; }
+
+    .header-nav a.active {
+      color: white;
+      border-bottom: 2px solid var(--red);
+      padding-bottom: 2px;
+    }
+
+    /* ── BREADCRUMB ───────────────────────────── */
+    .breadcrumb {
+      background: var(--white);
+      border-bottom: 1px solid var(--border-light);
+      padding: 12px 40px;
+    }
+
+    .breadcrumb-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .breadcrumb-inner a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb-inner a:hover { color: var(--navy); text-decoration: underline; }
+
+    .breadcrumb-sep { color: var(--border); }
+
+    .breadcrumb-current { color: var(--navy); font-weight: 600; }
+
+    /* ── HERO BAND ────────────────────────────── */
+    .hero-band {
+      background: var(--navy);
+      padding: 48px 40px 52px;
+    }
+
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: rgba(255,255,255,0.6);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* ── MAIN LAYOUT ──────────────────────────── */
+    .main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 48px 40px 80px;
+    }
+
+    /* ── STEP INDICATOR ───────────────────────── */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 36px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--border);
+      transition: color 0.3s;
+    }
+
+    .step.active { color: var(--navy); }
+    .step.done { color: var(--muted); }
+
+    .step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    .step.active .step-num {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .step.done .step-num {
+      background: var(--muted);
+      border-color: var(--muted);
+      color: white;
+    }
+
+    .step-line {
+      width: 40px;
+      height: 1px;
+      background: var(--border-light);
+      margin: 0 4px;
+    }
+
+    /* ── CHOICE SCREEN ────────────────────────── */
+    .screen { display: none; }
+    .screen.active {
+      display: block;
+      animation: fadeUp 0.4s ease forwards;
+    }
+
+    .choice-label {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .choice-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      padding: 32px 28px 28px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .choice-card::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--navy);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.25s ease;
+    }
+
+    .choice-card:hover::after { transform: scaleY(1); }
+
+    .choice-card:hover {
+      border-color: var(--navy);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(11,31,71,0.1);
+    }
+
+    .choice-card.type-complaint::after { background: var(--red); }
+    .choice-card.type-complaint:hover { border-color: var(--red); }
+
+    .choice-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      background: var(--cream);
+    }
+
+    .choice-icon-wrap svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .choice-title {
+      font-family: var(--font-sans);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .choice-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .choice-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 24px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .choice-cta span {
+      font-size: 16px;
+      transition: transform 0.2s;
+    }
+
+    .choice-card:hover .choice-cta span { transform: translateX(4px); }
+    .choice-card.type-complaint .choice-cta { color: var(--red); }
+
+    /* ── CHAT SCREEN ──────────────────────────── */
+    .chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .chat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--navy);
+      color: white;
+      padding: 7px 16px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .chat-badge .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: pulse 2s ease infinite;
+    }
+
+    .back-link {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.15s;
+    }
+
+    .back-link:hover { color: var(--navy); }
+
+    .chat-window {
+      background: var(--white);
+      border: 1px solid var(--border);
+      min-height: 300px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      scroll-behavior: smooth;
+    }
+
+    .chat-window::-webkit-scrollbar { width: 4px; }
+    .chat-window::-webkit-scrollbar-track { background: var(--cream); }
+    .chat-window::-webkit-scrollbar-thumb { background: var(--border); }
+
+    /* Messages */
+    .msg {
+      display: flex;
+      gap: 14px;
+      opacity: 0;
+      transform: translateY(6px);
+      animation: msgIn 0.3s ease forwards;
+    }
+
+    .msg.user-msg { flex-direction: row-reverse; }
+
+    .msg-avatar {
+      width: 34px;
+      height: 34px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .msg-avatar svg { width: 18px; height: 18px; }
+
+    .msg.user-msg .msg-avatar {
+      background: var(--light-bg);
+    }
+
+    .msg-bubble {
+      max-width: 72%;
+      padding: 14px 18px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--navy);
+      background: var(--cream);
+      border: 1px solid var(--border-light);
+    }
+
+    .msg-bubble strong { font-weight: 600; }
+
+    .msg.user-msg .msg-bubble {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+      font-style: italic;
+    }
+
+    /* Typing */
+    .typing-bubble {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 18px;
+    }
+
+    .dot {
+      width: 7px; height: 7px;
+      background: var(--border);
+      border-radius: 50%;
+      animation: blink 1.3s ease infinite;
+    }
+
+    .dot:nth-child(2) { animation-delay: 0.22s; }
+    .dot:nth-child(3) { animation-delay: 0.44s; }
+
+    /* Suggestions */
+    .suggestions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 18px;
+      min-height: 48px;
+    }
+
+    .sug-btn {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 9px 16px;
+      font-size: 14px;
+      font-family: var(--font-sans);
+      color: var(--navy);
+      cursor: pointer;
+      transition: all 0.15s;
+      opacity: 0;
+      animation: fadeUp 0.3s ease forwards;
+    }
+
+    .sug-btn:hover {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+
+    /* Escalate banner */
+    .escalate-banner {
+      display: none;
+      background: var(--navy-dark);
+      border-left: 4px solid var(--red);
+      padding: 18px 22px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      animation: fadeUp 0.3s ease forwards;
+    }
+
+    .escalate-banner.visible { display: flex; }
+
+    .escalate-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .escalate-btn {
+      background: var(--white);
+      color: var(--navy);
+      border: none;
+      padding: 12px 22px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-decoration: none;
+      display: inline-block;
+      letter-spacing: 0.5px;
+      transition: background 0.15s;
+    }
+
+    .escalate-btn:hover { background: var(--cream); }
+
+    /* Input row */
+    .input-row {
+      display: flex;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      margin-top: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .input-row:focus-within { border-color: var(--navy); }
+
+    .chat-input {
+      flex: 1;
+      border: none;
+      padding: 15px 18px;
+      font-size: 15px;
+      font-family: var(--font-serif);
+      color: var(--navy);
+      background: transparent;
+      outline: none;
+    }
+
+    .chat-input::placeholder { color: var(--muted); font-style: italic; }
+
+    .send-btn {
+      background: var(--navy);
+      color: white;
+      border: none;
+      padding: 0 24px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: background 0.15s;
+    }
+
+    .send-btn:hover { background: var(--navy-mid); }
+
+    /* ── COMPLAINT SCREEN ─────────────────────── */
+    .complaint-box {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-left: 5px solid var(--red);
+      padding: 40px 36px;
+    }
+
+    .complaint-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+
+    .complaint-title {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+
+    .complaint-body {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.75;
+      font-style: italic;
+      margin-bottom: 32px;
+      max-width: 580px;
+    }
+
+    .complaint-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--red);
+      color: white;
+      padding: 16px 28px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .complaint-cta:hover { background: var(--red-hover); }
+
+    .complaint-note {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--muted);
+      font-family: var(--font-sans);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .complaint-note::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ───────────────────────────────── */
+    .site-footer {
+      background: var(--navy-dark);
+      padding: 32px 40px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo svg {
+      height: 20px;
+      opacity: 0.4;
+    }
+
+    .footer-text {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ── ANIMATIONS ──────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.25; transform: scale(0.9); }
+      40%           { opacity: 1;    transform: scale(1); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+
+    /* ── RESPONSIVE ───────────────────────────── */
+    @media (max-width: 640px) {
+      .hero-title { font-size: 28px; }
+      .choice-grid { grid-template-columns: 1fr; }
+      .main { padding: 32px 20px 60px; }
+      .hero-band { padding: 36px 20px 40px; }
+      .site-header { padding: 0 20px; }
+      .breadcrumb { padding: 12px 20px; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+      .escalate-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="vrt-logo">
+      <!-- VRT wordmark SVG -->
+      <svg viewBox="0 0 200 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 10 L28 80 L56 10 H42 L28 50 L14 10 Z" fill="white"/>
+        <path d="M64 10 V80 H78 V54 H90 L108 80 H124 L104 52 C112 48 118 40 118 29 C118 18 110 10 96 10 H64 Z M78 22 H94 C102 22 104 26 104 30 C104 35 100 40 93 40 H78 Z" fill="white"/>
+        <path d="M130 10 V22 H152 V80 H166 V22 H188 V10 Z" fill="white"/>
+        <!-- Superscript circle -->
+        <circle cx="186" cy="12" r="10" fill="none" stroke="white" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <nav class="header-nav">
+      <a href="#">Home</a>
+      <a href="#">Ons aanbod</a>
+      <a href="#">Over ons</a>
+      <a href="#" class="active">Contact</a>
+    </nav>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="#">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">Contact</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero-band">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Klantendienst</div>
+      <h1 class="hero-title">Hoe kunnen we je helpen?</h1>
+      <p class="hero-sub">Stel je vraag aan onze assistent of dien een klacht in via het contactformulier.</p>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Step indicator -->
+    <div class="step-indicator" id="step-indicator">
+      <div class="step active" id="step-1">
+        <div class="step-num">1</div>
+        <span>Kies onderwerp</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step-2">
+        <div class="step-num">2</div>
+        <span>Gesprek of formulier</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step-3">
+        <div class="step-num">3</div>
+        <span>Opgelost</span>
+      </div>
+    </div>
+
+    <!-- SCREEN 1: Choice -->
+    <div class="screen active" id="screen-choice">
+      <div class="choice-label">Wat brengt je hier?</div>
+      <div class="choice-grid">
+
+        <div class="choice-card" onclick="startChat()">
+          <div class="choice-icon-wrap">
+            <svg viewBox="0 0 22 22" fill="none" stroke="var(--navy)" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="11" cy="11" r="9"/>
+              <path d="M11 7 v0.1 M11 10.5 v5"/>
+            </svg>
+          </div>
+          <div class="choice-title">Ik heb een vraag</div>
+          <div class="choice-desc">Over uitzendingen, VRT Max, technische problemen of andere diensten.</div>
+          <div class="choice-cta">Stel je vraag <span>→</span></div>
+        </div>
+
+        <div class="choice-card type-complaint" onclick="startComplaint()">
+          <div class="choice-icon-wrap" style="border-color: #f8d7dd; background: #fef2f4;">
+            <svg viewBox="0 0 22 22" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round">
+              <path d="M11 3 L20 19 H2 Z"/>
+              <path d="M11 10 v4 M11 16 v0.5"/>
+            </svg>
+          </div>
+          <div class="choice-title">Ik heb een klacht</div>
+          <div class="choice-desc">Over inhoud, journalistieke beslissingen of andere bezwaren.</div>
+          <div class="choice-cta">Klacht indienen <span>→</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCREEN 2a: Chat -->
+    <div class="screen" id="screen-chat">
+      <div class="chat-header">
+        <div class="chat-badge">
+          <div class="badge-dot"></div>
+          <span>VRT Assistent — online</span>
+        </div>
+        <button class="back-link" onclick="goBack()">← Andere keuze</button>
+      </div>
+
+      <div class="chat-window" id="chat-window"></div>
+
+      <div class="escalate-banner" id="escalate-banner">
+        <div class="escalate-text">Kon je assistent je vraag niet beantwoorden? Ons klantendienst-team helpt je graag persoonlijk verder.</div>
+        <a class="escalate-btn" href="https://www.vrt.be/heb-je-een-vraag/s/contactsupport-vrtnws" target="_blank">Naar het formulier →</a>
+      </div>
+
+      <div class="suggestions-row" id="suggestions"></div>
+
+      <div class="input-row">
+        <input class="chat-input" id="chat-input" type="text" placeholder="Typ je vraag hier…" onkeydown="handleKey(event)" />
+        <button class="send-btn" onclick="sendMessage()">Verstuur</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 2b: Complaint -->
+    <div class="screen" id="screen-complaint">
+      <div class="chat-header">
+        <div class="chat-badge" style="background: var(--red);">
+          <span>Klacht indienen</span>
+        </div>
+        <button class="back-link" onclick="goBack()">← Andere keuze</button>
+      </div>
+      <div class="complaint-box">
+        <div class="complaint-eyebrow">Formele klacht</div>
+        <h2 class="complaint-title">We nemen je klacht serieus.</h2>
+        <p class="complaint-body">
+          Klachten worden persoonlijk behandeld door ons team.
+          Via het contactformulier wordt je klacht correct geregistreerd en opgevolgd door de juiste persoon bij VRT.
+        </p>
+        <a class="complaint-cta" href="https://www.vrt.be/heb-je-een-vraag/s/contactsupport-vrtnws" target="_blank">
+          Klacht indienen via formulier →
+        </a>
+        <div class="complaint-note">Gemiddelde reactietijd: 3 werkdagen</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <svg viewBox="0 0 200 90" fill="none">
+          <path d="M0 10 L28 80 L56 10 H42 L28 50 L14 10 Z" fill="white"/>
+          <path d="M64 10 V80 H78 V54 H90 L108 80 H124 L104 52 C112 48 118 40 118 29 C118 18 110 10 96 10 H64 Z M78 22 H94 C102 22 104 26 104 30 C104 35 100 40 93 40 H78 Z" fill="white"/>
+          <path d="M130 10 V22 H152 V80 H166 V22 H188 V10 Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="footer-text">© 2025 VRT — Vlaamse Radio- en Televisieomroeporganisatie</div>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Cookies</a>
+        <a href="#">Toegankelijkheid</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── DATA ─────────────────────────────────── */
+    const FAQ = {
+      uitzending: {
+        answer: 'Gemiste uitzendingen vind je terug op <strong>VRT Max</strong>. Programma\'s zijn beschikbaar tot 30 dagen na uitzending. Sommige programma\'s zijn om rechtenredenen niet beschikbaar.',
+        followups: ['Hoe lang zijn programma\'s beschikbaar?', 'Wat is VRT Max?', 'Niet gevonden wat ik zocht']
+      },
+      vrtmax: {
+        answer: '<strong>VRT Max</strong> is gratis voor iedereen met een Vlaamse televisieaansluiting. Je hebt enkel een gratis account nodig om te streamen op al je toestellen.',
+        followups: ['Hoe maak ik een account aan?', 'Werkt VRT Max in het buitenland?', 'Niet gevonden wat ik zocht']
+      },
+      technisch: {
+        answer: 'Bij technische problemen: probeer de pagina te verversen en wis je browsercache. Problemen met de app? Verwijder de app en installeer ze opnieuw via de App Store of Play Store.',
+        followups: ['Problemen met inloggen', 'Video laadt niet', 'Niet gevonden wat ik zocht']
+      },
+      login: {
+        answer: 'Inlogproblemen zijn vaak te wijten aan verouderde cookies. Wis de cookies van <strong>login.vrt.be</strong> in je browser en probeer opnieuw. Wachtwoord vergeten? Vraag een nieuwe resetlink aan via het inlogscherm.',
+        followups: ['Hoe wis ik cookies?', 'Ik heb geen resetmail ontvangen', 'Niet gevonden wat ik zocht']
+      },
+      programma: {
+        answer: 'Informatie over programma\'s vind je op de website van het betreffende merk: <strong>VRT NWS</strong>, <strong>VRT 1</strong>, <strong>VRT Canvas</strong> of <strong>Sporza</strong>. Heb je een specifieke vraag over een programma?',
+        followups: ['Uitzendschema opzoeken', 'Terugkijken op VRT Max', 'Niet gevonden wat ik zocht']
+      },
+      default: {
+        answer: 'Goede vraag! Onze meest gestelde vragen gaan over gemiste uitzendingen, VRT Max, technische problemen en programma-informatie. Kies een onderwerp of typ je vraag.',
+        followups: ['Gemiste uitzending', 'VRT Max account', 'Technisch probleem', 'Programma-informatie']
+      }
+    };
+
+    const INITIAL_SUGGESTIONS = [
+      'Gemiste uitzending',
+      'VRT Max account',
+      'Technisch probleem',
+      'Programma-informatie'
+    ];
+
+    /* ── STATE ────────────────────────────────── */
+    let notResolved = 0;
+
+    /* ── NAVIGATION ───────────────────────────── */
+    function show(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      const el = document.getElementById(id);
+      el.classList.add('active');
+    }
+
+    function setStep(n) {
+      [1, 2, 3].forEach(i => {
+        const el = document.getElementById('step-' + i);
+        el.classList.remove('active', 'done');
+        if (i < n) el.classList.add('done');
+        if (i === n) el.classList.add('active');
+      });
+    }
+
+    function startChat() {
+      show('screen-chat');
+      setStep(2);
+      setTimeout(() => {
+        addBot('Hallo! Ik ben de VRT-assistent. Hoe kan ik je vandaag helpen?');
+        setTimeout(() => showSuggestions(INITIAL_SUGGESTIONS), 900);
+      }, 200);
+    }
+
+    function startComplaint() {
+      show('screen-complaint');
+      setStep(2);
+    }
+
+    function goBack() {
+      show('screen-choice');
+      setStep(1);
+      document.getElementById('chat-window').innerHTML = '';
+      document.getElementById('suggestions').innerHTML = '';
+      document.getElementById('escalate-banner').classList.remove('visible');
+      document.getElementById('chat-input').value = '';
+      notResolved = 0;
+    }
+
+    /* ── MESSAGES ─────────────────────────────── */
+    function addBot(html, delay = 0) {
+      const win = document.getElementById('chat-window');
+      if (delay > 0) {
+        const tid = 'typing-' + Date.now();
+        const t = document.createElement('div');
+        t.className = 'msg'; t.id = tid;
+        t.innerHTML = avatarVRT() + `<div class="msg-bubble"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+        win.appendChild(t);
+        win.scrollTop = win.scrollHeight;
+        setTimeout(() => {
+          const el = document.getElementById(tid);
+          if (el) el.remove();
+          addBot(html, 0);
+        }, delay);
+        return;
+      }
+      const el = document.createElement('div');
+      el.className = 'msg';
+      el.innerHTML = avatarVRT() + `<div class="msg-bubble">${html}</div>`;
+      win.appendChild(el);
+      win.scrollTop = win.scrollHeight;
+    }
+
+    function addUser(text) {
+      const win = document.getElementById('chat-window');
+      const el = document.createElement('div');
+      el.className = 'msg user-msg';
+      el.innerHTML = `<div class="msg-avatar" style="background:var(--light-bg);">
+        <svg viewBox="0 0 22 22" fill="none" stroke="var(--navy)" stroke-width="1.5"><circle cx="11" cy="8" r="4"/><path d="M3 20 C3 15 19 15 19 20"/></svg>
+      </div><div class="msg-bubble">${text}</div>`;
+      win.appendChild(el);
+      win.scrollTop = win.scrollHeight;
+    }
+
+    function avatarVRT() {
+      return `<div class="msg-avatar">
+        <svg viewBox="0 0 200 90" fill="none">
+          <path d="M0 10 L28 80 L56 10 H42 L28 50 L14 10 Z" fill="white"/>
+          <path d="M64 10 V80 H78 V54 H90 L108 80 H124 L104 52 C112 48 118 40 118 29 C118 18 110 10 96 10 H64 Z M78 22 H94 C102 22 104 26 104 30 C104 35 100 40 93 40 H78 Z" fill="white"/>
+          <path d="M130 10 V22 H152 V80 H166 V22 H188 V10 Z" fill="white"/>
+        </svg>
+      </div>`;
+    }
+
+    /* ── SUGGESTIONS ──────────────────────────── */
+    function showSuggestions(items) {
+      const c = document.getElementById('suggestions');
+      c.innerHTML = '';
+      items.forEach((s, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'sug-btn';
+        btn.style.animationDelay = (i * 0.07) + 's';
+        btn.textContent = s;
+        btn.onclick = () => pickSuggestion(s);
+        c.appendChild(btn);
+      });
+    }
+
+    function pickSuggestion(text) {
+      document.getElementById('suggestions').innerHTML = '';
+      addUser(text);
+      respond(text);
+    }
+
+    /* ── LOGIC ────────────────────────────────── */
+    function respond(text) {
+      const t = text.toLowerCase();
+      let topic = 'default';
+
+      if (t.includes('niet gevonden') || t.includes('niet opgelost') || t.includes('anders')) {
+        notResolved++;
+        addBot('Begrepen. Laat me je doorverwijzen naar ons team.', 800);
+        setTimeout(() => document.getElementById('escalate-banner').classList.add('visible'), 1400);
+        setTimeout(() => setStep(3), 1500);
+        return;
+      }
+
+      if (t.includes('uitzending') || t.includes('terugkijk') || t.includes('gemist') || t.includes('afkijk')) topic = 'uitzending';
+      else if (t.includes('max') || t.includes('abonnement') || t.includes('account') || t.includes('gratis') || t.includes('buitenland')) topic = 'vrtmax';
+      else if (t.includes('login') || t.includes('inlog') || t.includes('wachtwoord') || t.includes('aanmeld') || t.includes('cookie')) topic = 'login';
+      else if (t.includes('technisch') || t.includes('probleem') || t.includes('werkt niet') || t.includes('laden') || t.includes('fout')) topic = 'technisch';
+      else if (t.includes('programma') || t.includes('schema') || t.includes('uitzendschema') || t.includes('serie') || t.includes('film')) topic = 'programma';
+
+      const r = FAQ[topic];
+      addBot(r.answer, 900);
+      setTimeout(() => showSuggestions(r.followups), 1700);
+    }
+
+    /* ── INPUT ────────────────────────────────── */
+    function sendMessage() {
+      const inp = document.getElementById('chat-input');
+      const text = inp.value.trim();
+      if (!text) return;
+      inp.value = '';
+      document.getElementById('suggestions').innerHTML = '';
+      addUser(text);
+      respond(text);
+    }
+
+    function handleKey(e) { if (e.key === 'Enter') sendMessage(); }
+  </script>
+
+</body>
+</html>
